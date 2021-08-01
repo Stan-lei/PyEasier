@@ -1,0 +1,4 @@
+choice-question 2 15
+true/false-question 7 15
+fill-in-blank-question 2 4
+short-answer-question 0 0
