@@ -98,7 +98,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">background-color: rgb(255, 224, 102);</string>
    </property>
    <property name="text">
     <string>查看答案</string>
@@ -120,6 +120,9 @@
      <weight>75</weight>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 224, 102);</string>
    </property>
    <property name="text">
     <string>⇨</string>
@@ -145,6 +148,9 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 224, 102);</string>
+   </property>
    <property name="text">
     <string>⇦</string>
    </property>
@@ -167,6 +173,9 @@
      <pointsize>10</pointsize>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(112, 193, 179);</string>
+   </property>
    <property name="text">
     <string/>
    </property>
@@ -188,6 +197,9 @@
      <family>方正小标宋简体</family>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 224, 102);</string>
    </property>
    <property name="text">
     <string>作答区</string>

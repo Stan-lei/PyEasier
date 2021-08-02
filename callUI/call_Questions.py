@@ -1,13 +1,14 @@
 import abc
 
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QMessageBox, QWidget
+from PyQt5.QtWidgets import QWidget
 from callUI.UIWIN.ChoiceQ import Ui_ChoiceQ
 from callUI.UIWIN.JudgementQ import Ui_JudgementQ
 from callUI.UIWIN.ShortAnswerQ import Ui_ShortAnswerQ
 from callUI.UIWIN.FillinBlankQ import Ui_FillinBlankQ
 from callUI.call_Box import QuestionBox
-from path import PICSRC
+import pandas as pd
+from path import PICSRC, WCHOICEQ, WSHORTANSQ, WFILLINBLANKQ, WJUDGEMENTQ
 
 
 class AbstractQuestion(object):
@@ -43,6 +44,8 @@ class ChoiceQ(QWidget, Ui_ChoiceQ, AbstractQuestion):
         self.rightCnt = 0
         self.message = "选择题的正确率为"
         self.type = "choice-question"
+
+        self.wrongQ = []
 
         self.checked = []
         self.index = 0
@@ -126,9 +129,12 @@ class ChoiceQ(QWidget, Ui_ChoiceQ, AbstractQuestion):
                 self.dic[x].setStyleSheet("background-color: rgb(229, 92, 92);")
             else:
                 right = True
-        if right and not self.checked[self.index][0]:
-            self.rightCnt += 1
-                
+        if not self.checked[self.index][0]:
+            if right:
+                self.rightCnt += 1
+            else:
+                self.wrongQ.append(self.q_list[self.index])
+
         self.checked[self.index][0] = True
 
     def cleanBtn(self):
@@ -167,6 +173,32 @@ class ChoiceQ(QWidget, Ui_ChoiceQ, AbstractQuestion):
         self.before = before
         self.after = after
 
+    def cleanWrongQ(self):
+        df = pd.read_excel(WCHOICEQ)
+        question = list(df['question'])
+        A = list(df['A'])
+        B = list(df['B'])
+        C = list(df['C'])
+        D = list(df['D'])
+        ans = list(df['ans'])
+
+        for item in self.wrongQ:
+            str_q = getStr(item['question'])
+            if str_q not in question:
+                question.append(str_q)
+                A.append(getStr(item['A']))
+                B.append(getStr(item['B']))
+                C.append(getStr(item['C']))
+                D.append(getStr(item['D']))
+                ans.append(getStr(item['ans']))
+        data = {'question': question,
+                'A': A, 'B': B, 'C': C, 'D': D,
+                'ans': ans}
+        self.wrongQ.clear()
+        df = pd.DataFrame(data)
+        df.to_excel(WCHOICEQ)
+        pass
+
     def showEvent(self, event):
         workingList = self.matrix.workingList
         length = len(workingList)
@@ -191,6 +223,8 @@ class JudgementQ(QWidget, Ui_JudgementQ, AbstractQuestion):
         self.rightCnt = 0
         self.message = "判断题的正确率为"
         self.type = "true/false-question"
+
+        self.wrongQ = []
 
         self.checked = []
         self.index = 0
@@ -236,8 +270,13 @@ class JudgementQ(QWidget, Ui_JudgementQ, AbstractQuestion):
                 self.dic[x].setStyleSheet("background-color: rgb(229, 92, 92);")
             else:
                 right = True
-        if right and not self.checked[self.index][0]:
-            self.rightCnt += 1
+
+        if not self.checked[self.index][0]:
+            if right:
+                self.rightCnt += 1
+            else:
+                self.wrongQ.append(self.q_list[self.index])
+
         self.checked[self.index][0] = True
         pass
 
@@ -268,6 +307,23 @@ class JudgementQ(QWidget, Ui_JudgementQ, AbstractQuestion):
         self.before = before
         self.after = after
 
+    def cleanWrongQ(self):
+        df = pd.read_excel(WJUDGEMENTQ)
+        question = list(df['question'])
+        ans = list(df['ans'])
+
+        for item in self.wrongQ:
+            str_q = getStr(item['question'])
+            if str_q not in question:
+                question.append(str_q)
+                ans.append(getStr(item['ans']))
+        data = {'question': question,
+                'ans': ans}
+        self.wrongQ.clear()
+        df = pd.DataFrame(data)
+        df.to_excel(WJUDGEMENTQ)
+        pass
+
     def showEvent(self, event):
         workingList = self.matrix.workingList
         length = len(workingList)
@@ -292,6 +348,8 @@ class ShortAnsQ(QWidget, Ui_ShortAnswerQ, AbstractQuestion):
         self.rightCnt = 0
         self.message = "简答题的正确率为"
         self.type = "short-answer-question"
+
+        self.wrongQ = []
 
         self.checked = []
         self.index = 0
@@ -352,6 +410,10 @@ class ShortAnsQ(QWidget, Ui_ShortAnswerQ, AbstractQuestion):
         self.before = before
         self.after = after
 
+    def cleanWrongQ(self):
+        # assert all shortAns questions han no wrong ans
+        pass
+
     def showEvent(self, event):
         workingList = self.matrix.workingList
         length = len(workingList)
@@ -377,6 +439,8 @@ class FillinBlankQ(QWidget, Ui_FillinBlankQ, AbstractQuestion):
         self.rightCnt = 0
         self.message = "填空题的正确率为"
         self.type = "fill-in-blank-question"
+
+        self.wrongQ = []
 
         self.checked = []
         self.index = 0
@@ -417,8 +481,12 @@ class FillinBlankQ(QWidget, Ui_FillinBlankQ, AbstractQuestion):
         else:
             self.answer_btn.setStyleSheet("background-color: rgb(229, 92, 92);")  # wrong color
 
-        if right and not self.checked[self.index][0]:
-            self.rightCnt += 1
+        if not self.checked[self.index][0]:
+            if right:
+                self.rightCnt += 1
+            else:
+                self.wrongQ.append(self.q_list[self.index])
+
         self.checked[self.index][0] = True
         pass
 
@@ -448,6 +516,23 @@ class FillinBlankQ(QWidget, Ui_FillinBlankQ, AbstractQuestion):
     def setBA(self, before, after):
         self.before = before
         self.after = after
+
+    def cleanWrongQ(self):
+        df = pd.read_excel(WFILLINBLANKQ)
+        question = list(df['question'])
+        ans = list(df['ans'])
+
+        for item in self.wrongQ:
+            str_q = getStr(item['question'])
+            if str_q not in question:
+                question.append(str_q)
+                ans.append(getStr(item['ans']))
+        data = {'question': question,
+                'ans': ans}
+        self.wrongQ.clear()
+        df = pd.DataFrame(data)
+        df.to_excel(WFILLINBLANKQ)
+        pass
 
     def showEvent(self, event):
         workingList = self.matrix.workingList

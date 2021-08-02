@@ -1,9 +1,7 @@
-import sys
-
-from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, qApp, QMessageBox, QWidget, QLineEdit
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow, qApp
 from callUI.UIWIN.WorkingWindow import Ui_WorkingWindow
-from callUI.call_Box import QuestionBox, MessageBox
+from callUI.call_Box import MessageBox
 from callUI.call_Questions import *
 from callUI.call_ChartDisplayer import ChartDisplayer
 from callUI.call_UserCenter import UserCenter
@@ -52,6 +50,11 @@ class WorkingWindow(QMainWindow, Ui_WorkingWindow):
         self.userCenter.show()
         pass
 
+    def cleanWrongQ(self):
+        for item in self.workingList:
+            item.cleanWrongQ()
+        pass
+
     def beginTest(self):
         # TODO
         if not self.choiceQ_cbx.isChecked() and \
@@ -61,7 +64,13 @@ class WorkingWindow(QMainWindow, Ui_WorkingWindow):
             return False
 
         self.workingList.clear()
-        self.hide()
+        if self.wrongSet_cbx.isChecked():
+            self.wrongSetTest()
+        else:
+            self.normalTest()
+        pass
+
+    def normalTest(self):
         working = None
         qusetionNum = int(self.questionNum_sbx.text())
         if self.shortAnsQ_cbx.isChecked():
@@ -80,8 +89,41 @@ class WorkingWindow(QMainWindow, Ui_WorkingWindow):
             self.choiceQ.initQuestions(randomCQ(qusetionNum))
             working = self.setWorking(self.choiceQ, working)
             self.workingList.append(self.choiceQ)
-
+        self.hide()
         working.show()
+
+    def wrongSetTest(self):  # TODO:
+        working = None
+        qusetionNum = int(self.questionNum_sbx.text())
+        if self.shortAnsQ_cbx.isChecked():
+            q_list = randomWSAQ(qusetionNum)
+            if len(q_list) != 0:
+                self.shortAnsQ.initQuestions(q_list=q_list)
+                working = self.setWorking(self.shortAnsQ, working)
+                self.workingList.append(self.shortAnsQ)
+        if self.fillinBlankQ_cbx.isChecked():
+            q_list = randomWFBQ(qusetionNum)
+            if len(q_list) != 0:
+                self.fillinBlankQ.initQuestions(q_list=q_list)
+                working = self.setWorking(self.fillinBlankQ, working)
+                self.workingList.append(self.fillinBlankQ)
+        if self.judgementQ_cbx.isChecked():
+            q_list = randomWJQ(qusetionNum)
+            if len(q_list) != 0:
+                self.judgementQ.initQuestions(q_list=q_list)
+                working = self.setWorking(self.judgementQ, working)
+                self.workingList.append(self.judgementQ)
+        if self.choiceQ_cbx.isChecked():
+            q_list = randomWCQ(qusetionNum)
+            if len(q_list) != 0:
+                self.choiceQ.initQuestions(q_list=q_list)
+                working = self.setWorking(self.choiceQ, working)
+                self.workingList.append(self.choiceQ)
+        if working is not None:
+            self.hide()
+            working.show()
+        else:
+            self.msgBox("提示", "您还没有错题，请训练后再次查看！")
         pass
 
     @staticmethod
@@ -127,6 +169,7 @@ class WorkingWindow(QMainWindow, Ui_WorkingWindow):
         for working in self.workingList:
             working.hide()
             working.cleanBtn()
+            working.cleanWrongQ()
         self.show()
         pass
 

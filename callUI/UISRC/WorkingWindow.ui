@@ -253,7 +253,7 @@
      </font>
     </property>
     <property name="text">
-     <string>错题模式</string>
+     <string>易错模式</string>
     </property>
     <property name="iconSize">
      <size>

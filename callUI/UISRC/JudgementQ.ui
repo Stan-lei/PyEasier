@@ -32,7 +32,7 @@
    <string>正在答题</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 165, 171);</string>
+   <string notr="true">background-color: rgb(255, 170, 173);</string>
   </property>
   <widget class="QPushButton" name="next_btn">
    <property name="geometry">
@@ -50,6 +50,9 @@
      <weight>75</weight>
      <bold>true</bold>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 224, 102);</string>
    </property>
    <property name="text">
     <string>⇨</string>
@@ -94,6 +97,9 @@
      <bold>true</bold>
     </font>
    </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 224, 102);</string>
+   </property>
    <property name="text">
     <string>⇦</string>
    </property>
@@ -119,6 +125,9 @@
    <property name="text">
     <string>√(T)</string>
    </property>
+   <property name="shortcut">
+    <string>T</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="False_btn">
    <property name="geometry">
@@ -138,6 +147,9 @@
    <property name="text">
     <string>×(F)</string>
    </property>
+   <property name="shortcut">
+    <string>F</string>
+   </property>
   </widget>
   <widget class="QLabel" name="index_lbl">
    <property name="geometry">
@@ -153,6 +165,9 @@
      <family>方正小标宋简体</family>
      <pointsize>10</pointsize>
     </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(112, 193, 179);</string>
    </property>
    <property name="text">
     <string/>

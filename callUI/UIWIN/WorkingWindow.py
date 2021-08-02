@@ -152,7 +152,7 @@ class Ui_WorkingWindow(object):
         self.shortAnsQ_cbx.setText(_translate("WorkingWindow", "简答题"))
         self.welcome_label.setText(_translate("WorkingWindow", "又来做题啦，彦祖！"))
         self.fillinBlankQ_cbx.setText(_translate("WorkingWindow", "填空题"))
-        self.wrongSet_cbx.setText(_translate("WorkingWindow", "错题模式"))
+        self.wrongSet_cbx.setText(_translate("WorkingWindow", "易错模式"))
         self.menuUser.setTitle(_translate("WorkingWindow", "个人中心"))
         self.menuExit.setTitle(_translate("WorkingWindow", "退出登录"))
         self.actionExit.setText(_translate("WorkingWindow", "退出登录"))

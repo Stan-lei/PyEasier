@@ -15,6 +15,11 @@ JUDGEMENTQ = DATABASE + "judgementQ.xlsx"
 SHORTANSQ = DATABASE + "shortAnsQ.xlsx"
 FILLINBLANKQ = DATABASE + "fillinBlankQ.xlsx"
 
+WCHOICEQ = DATABASE + "wchoiceQ.xlsx"
+WJUDGEMENTQ = DATABASE + "wjudgementQ.xlsx"
+WSHORTANSQ = DATABASE + "wshortAnsQ.xlsx"
+WFILLINBLANKQ = DATABASE + "wfillinBlankQ.xlsx"
+
 
 def initPath():
     createDir(USERINF)
