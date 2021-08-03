@@ -1,5 +1,8 @@
 /.idea/
 /__pycache__/
+/callUI/__pycache__/
+/callUI/UIWIN/__pycache__/
+/userCon/__pycache__/
 /build/
 /dist/
 /main.spec
