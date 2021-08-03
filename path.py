@@ -24,13 +24,13 @@ WFILLINBLANKQ = DATABASE + "wfillinBlankQ.xlsx"
 def initPath():
     createDir(USERINF)
     createFile(USERLOG)
-    f = open(UID, 'w')
+    f = open(UID, 'w', encoding='utf-8')
     f.write("100000\n")
     f.close()
 
 
 def createFile(filename):
-    f = open(filename, 'w')
+    f = open(filename, 'w', encoding='utf-8')
     f.close()
 
 
@@ -39,7 +39,7 @@ def createDir(dirname):
 
 
 def writeSingleLine(filename, line):
-    f = open(filename, 'w')
+    f = open(filename, 'w', encoding='utf-8')
     f.write(line)
     f.close()
 

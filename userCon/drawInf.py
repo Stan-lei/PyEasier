@@ -18,7 +18,7 @@ dic = {"choice-question": "选择题",
 
 
 def initUserPath():
-    f = open(WORKINGUSR, 'r')
+    f = open(WORKINGUSR, 'r', encoding='utf-8')
     usrname, pwd, uid = f.readline().split()
     global USERPATH, USERDATA, ALLPREVIOUS
     global BARCHART, PIECHART, LINECHART
@@ -37,7 +37,7 @@ def drawBarChart():
     rate = []
     try:
         total = 0
-        with open(USERDATA, 'r') as data:
+        with open(USERDATA, 'r', encoding='utf-8') as data:
             for line in data.readlines():
                 infs = line.split()
                 Qtype.append(infs[0])
@@ -69,7 +69,7 @@ def drawPieChart():
     cnt = []
     try:
         total = 0
-        with open(USERDATA, 'r') as data:
+        with open(USERDATA, 'r', encoding='utf-8') as data:
             for line in data.readlines():
                 infs = line.split()
                 total += int(infs[2])
@@ -99,7 +99,7 @@ def drawLineChart():
     cnt = []
     rate = []
     try:
-        with open(ALLPREVIOUS, 'r') as data:
+        with open(ALLPREVIOUS, 'r', encoding='utf-8') as data:
             for line in reversed(data.readlines()):
                 infs = line.split()
                 if len(cnt) == 6 or infs[0] == '0':

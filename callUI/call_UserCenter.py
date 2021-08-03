@@ -1,5 +1,5 @@
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtWidgets import QMessageBox, QWidget, QApplication
+from PyQt5.QtWidgets import QWidget
 from callUI.UIWIN.UserCenter import Ui_UserCenter
 from callUI.call_ChangeUsrInf import ChangeUsrname, ChangePwd
 
@@ -36,7 +36,7 @@ class UserCenter(QWidget, Ui_UserCenter):
 
     @staticmethod
     def getWorkingUser():
-        with open(WORKINGUSR, 'r') as f:
+        with open(WORKINGUSR, 'r', encoding='utf-8') as f:
             usrname, pwd, uid = f.readline().split()
         return usrname, pwd, uid
 

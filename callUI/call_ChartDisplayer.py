@@ -57,7 +57,7 @@ class ChartDisplayer(QWidget, Ui_ChartDisplayer):
 
     @staticmethod
     def getWorkingUserPath():
-        with open(WORKINGUSR, 'r') as f:
+        with open(WORKINGUSR, 'r', encoding='utf-8') as f:
             usrname, pwd, uid = f.readline().split()
             USERPATH = USERINF + uid + '/'
         return USERPATH

@@ -2,7 +2,7 @@ from path import *
 
 
 def hasUser(username):
-    with open(USERLOG, 'r') as f:
+    with open(USERLOG, 'r', encoding='utf-8') as f:
         f.seek(0)
         for line in f.readlines():
             if username == line.split()[0]:
@@ -13,7 +13,7 @@ def hasUser(username):
 
 
 def getUser(username):
-    with open(USERLOG, 'r') as f:
+    with open(USERLOG, 'r', encoding='utf-8') as f:
         f.seek(0)
         for line in f.readlines():
             if username == line.split()[0]:

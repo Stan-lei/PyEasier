@@ -137,7 +137,7 @@ class WorkingWindow(QMainWindow, Ui_WorkingWindow):
         message = ["本次作答已完成"]
         DATA = self.getWorkingUserPath() + 'data.txt'
         ALLPRE = self.getWorkingUserPath() + 'allPrevious.txt'
-        with open(DATA, 'r') as data:
+        with open(DATA, 'r', encoding='utf-8') as data:
             lines = data.readlines()
 
         preCnt = 0
@@ -155,10 +155,10 @@ class WorkingWindow(QMainWindow, Ui_WorkingWindow):
                     total = str(int(total) + len(working.q_list))
                     lines[i] = ' '.join([Qtype, right, total]) + '\n'
                     break
-        with open(DATA, 'w') as data:
+        with open(DATA, 'w', encoding='utf-8') as data:
             data.writelines(lines)
 
-        with open(ALLPRE, 'r+') as allPrevious:
+        with open(ALLPRE, 'r+', encoding='utf-8') as allPrevious:
             lines = allPrevious.readlines()
             cnt, rate = lines[-1].split()
             allPrevious.write(' '.join([str(int(cnt) + 1), str(preCnt / preTotal)]) + '\n')
@@ -175,7 +175,7 @@ class WorkingWindow(QMainWindow, Ui_WorkingWindow):
 
     @staticmethod
     def getWorkingUserPath():
-        f = open(WORKINGUSR, 'r')
+        f = open(WORKINGUSR, 'r', encoding='utf-8')
         usrname, pwd, uid = f.readline().split()
         PATH = USERINF + uid + '/'
         f.close()

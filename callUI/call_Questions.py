@@ -8,7 +8,7 @@ from callUI.UIWIN.ShortAnswerQ import Ui_ShortAnswerQ
 from callUI.UIWIN.FillinBlankQ import Ui_FillinBlankQ
 from callUI.call_Box import QuestionBox
 import pandas as pd
-from path import PICSRC, WCHOICEQ, WSHORTANSQ, WFILLINBLANKQ, WJUDGEMENTQ
+from path import PICSRC, WCHOICEQ, WFILLINBLANKQ, WJUDGEMENTQ
 
 
 class AbstractQuestion(object):
@@ -637,9 +637,12 @@ def checkedUnfinished(self):
             if not self.checked[i][0]:
                 self.close()
                 self.setQuestion(i)
+                workingList = self.matrix.workingList
+                length = len(workingList)
+                total = len(self.q_list)
+                self.index_lbl.setText(f"第{total * (length - workingList.index(self) - 1) + self.index + 1}题/"
+                                       f"共{total * length}题")
                 self.cleanBtn()
                 return True
         self = self.before
     return False
-
-

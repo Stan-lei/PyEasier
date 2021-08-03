@@ -1,5 +1,5 @@
-from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtWidgets import QMainWindow, qApp, QMessageBox, QWidget, QInputDialog
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QMainWindow, qApp, QWidget
 from callUI.UIWIN.LoginWindow import Ui_LoginWindow
 from callUI.UIWIN.RegisterForm import Ui_RegisterForm
 from callUI.UIWIN.CleanPwd import Ui_CleanPwd
@@ -116,14 +116,14 @@ class RegisterForm(QWidget, Ui_RegisterForm):
         if not self.checker():
             return False
 
-        f = open(UID, 'r+')
+        f = open(UID, 'r+', encoding='utf-8')
         uid = f.readline()
-        log = open(USERLOG, 'a+')
+        log = open(USERLOG, 'a+', encoding='utf-8')
         log.write(f"{username} {password1} {uid}")
 
         createDir(USERINF + str(int(uid)))
 
-        with open(USERINF + str(int(uid)) + "/data.txt", 'w') as data:
+        with open(USERINF + str(int(uid)) + "/data.txt", 'w', encoding='utf-8') as data:
             initList = ["choice-question 0 0\n",
                         "true/false-question 0 0\n",
                         "fill-in-blank-question 0 0\n",
@@ -138,7 +138,7 @@ class RegisterForm(QWidget, Ui_RegisterForm):
         f.write(uid)
 
         self.msgBox("提示", "注册成功！请牢记您的用户名和密码！")
-        self.closeEvent(event="")
+        self.close()
         pass
 
     def checker(self):
@@ -204,7 +204,7 @@ class RegisterForm(QWidget, Ui_RegisterForm):
         self.pwd_hint_2.clear()
         self.ans_hint.clear()
 
-        self.close()
+        event.accept()
 
     def msgBox(self, title, text):
         message = MessageBox(self, title, text)
@@ -256,14 +256,14 @@ class CleanPwd(QWidget, Ui_CleanPwd):
         if ans != self.ans:
             self.msgBox("警告", "密保问题答案错误！请再次尝试！")
         else:
-            with open(USERLOG, 'r') as log:
+            with open(USERLOG, 'r', encoding='utf-8') as log:
                 users = log.readlines()
                 for i in range(len(users)):
                     if self.username in users[i].split():
                         users[i] = ' '.join([self.username, "114514", self.uid]) + '\n'
                         break
 
-            with open(USERLOG, 'w') as log:
+            with open(USERLOG, 'w', encoding='utf-8') as log:
                 log.writelines(users)
             self.msgBox("提示", "您的密码已重置为114514！\n\n请登陆后立即修改密码！")
             self.close()

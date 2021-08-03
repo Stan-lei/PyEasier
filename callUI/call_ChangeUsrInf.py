@@ -37,14 +37,14 @@ class ChangeUsrname(QWidget, Ui_ChangeUsrname):
         usrname, pwd, uid = self.getWorkingUser()
         writeSingleLine(WORKINGUSR, ' '.join([newName, pwd, uid]))
 
-        with open(USERLOG, 'r') as log:
+        with open(USERLOG, 'r', encoding='utf-8') as log:
             users = log.readlines()
             for i in range(len(users)):
                 if usrname in users[i].split():
                     users[i] = ' '.join([newName, pwd, uid]) + '\n'
                     break
 
-        with open(USERLOG, 'w') as log:
+        with open(USERLOG, 'w', encoding='utf-8') as log:
             log.writelines(users)
 
         self.msgBox("提示", "修改成功，请牢记您的新用户名！")
@@ -55,7 +55,7 @@ class ChangeUsrname(QWidget, Ui_ChangeUsrname):
 
     @staticmethod
     def getWorkingUser():
-        with open(WORKINGUSR, 'r') as f:
+        with open(WORKINGUSR, 'r', encoding='utf-8') as f:
             usrname, pwd, uid = f.readline().split()
         return usrname, pwd, uid
 
@@ -140,8 +140,6 @@ class ChangePwd(QWidget, Ui_ChangePwd):
         self.newPwd_hint_2.clear()
 
     def confirmPwd(self):
-        usrname, pwd, uid = self.getWorkingUser()
-
         oldpwd = self.oldpwd_let.text()
         password1 = self.newpwd_let1.text()
         password2 = self.newpwd_let2.text()
@@ -155,14 +153,14 @@ class ChangePwd(QWidget, Ui_ChangePwd):
         usrname, pwd, uid = self.getWorkingUser()
         writeSingleLine(WORKINGUSR, ' '.join([usrname, password1, uid]))
 
-        with open(USERLOG, 'r') as log:
+        with open(USERLOG, 'r', encoding='utf-8') as log:
             users = log.readlines()
             for i in range(len(users)):
                 if usrname in users[i].split():
                     users[i] = ' '.join([usrname, password1, uid]) + '\n'
                     break
 
-        with open(USERLOG, 'w') as log:
+        with open(USERLOG, 'w', encoding='utf-8') as log:
             log.writelines(users)
 
         self.msgBox("提示", "修改成功，请牢记您的新密码！")
@@ -175,7 +173,7 @@ class ChangePwd(QWidget, Ui_ChangePwd):
 
     @staticmethod
     def getWorkingUser():
-        with open(WORKINGUSR, 'r') as f:
+        with open(WORKINGUSR, 'r', encoding='utf-8') as f:
             usrname, pwd, uid = f.readline().split()
         return usrname, pwd, uid
 
